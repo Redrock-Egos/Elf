@@ -26,6 +26,10 @@ versions.rxandroid = '2.0.2'
 versions.rxkotlin = '2.2.0'
 versions.rxpermissions = '0.10.2'
 
+//lifecycle
+versions.lifecycle = '1.1.1'
+versions.room = '1.1.1'
+
 /**
  * dependencies
  */
@@ -77,7 +81,27 @@ rx.rxkotlin = "io.reactivex.rxjava2:rxkotlin:$versions.rxkotlin"
 rx.rxpermissions = "com.github.tbruyelle:rxpermissions:$versions.rxpermissions"
 deps.rx = rx
 
+//lifecycle
+def lifecycle_d = [:]
+lifecycle_d.lifecycle = "android.arch.lifecycle:extensions:$versions.lifecycle"
+lifecycle_d.room = "android.arch.persistence.room:runtime:$versions.room"
+deps.lifecycle = lifecycle_d
+
 ext.deps = deps
+
+/**
+ * compiler
+ */
+
+def compilers = [:]
+
+//lifecycle
+def lifecycle_c = [:]
+lifecycle_c.lifecycle = "android.arch.lifecycle:compiler:$versions.lifecycle"
+lifecycle_c.room = "android.arch.persistence.room:compiler:$versions.room"
+compilers.lifecycle = lifecycle_c
+
+ext.compilers = compilers
 
 /**
  * build

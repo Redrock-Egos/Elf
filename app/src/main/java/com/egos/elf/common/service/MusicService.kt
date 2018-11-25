@@ -1,0 +1,125 @@
+package com.egos.elf.common.service
+
+import android.app.Service
+import android.content.Intent
+import android.os.Binder
+import android.os.IBinder
+import com.egos.elf.App
+import com.egos.elf.common.bean.moe.Music
+import com.egos.elf.common.utils.ElfMusicPlayer
+
+class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
+
+    private var mMusicIndicator = 0
+    private var topListener: MusicPlayStatusListener? = null
+
+    private lateinit var mPlayer: ElfMusicPlayer
+    private lateinit var mMusicControlBinder: IBinder
+
+    override fun onCreate() {
+        super.onCreate()
+        mMusicControlBinder = MusicControlBinder()
+        mPlayer = ElfMusicPlayer()
+        mPlayer.mStatusListener = this
+        App.playListManager.currentListChangeListener = {
+            mMusicIndicator = -1
+            playNextMusic()
+        }
+    }
+
+    override fun onDestroy() {
+        mPlayer.release()
+        super.onDestroy()
+    }
+
+    override fun onPlayerStart() {
+        topListener?.onPlayStart()
+    }
+
+    override fun onPlayerPause() {
+        topListener?.onPlayPause()
+    }
+
+    override fun onPlayerStop() {
+        topListener?.onPlayStop()
+    }
+
+    override fun onPlayerComplete() {
+        playNextMusic()
+    }
+
+    override fun onPlayerProgressUpdate(progress: Int) {
+        topListener?.onPlayProgressUpdate(progress)
+    }
+
+    override fun onBind(intent: Intent) = mMusicControlBinder
+
+    private fun playMusic(track: Music) {
+        mPlayer.playMusic(getMusicPath(track.id))
+    }
+
+    private fun getMusicPath(id: Int) =
+        App.getProxy().getProxyUrl("http://music.163.com/song/media/outer/url?id=$id.mp3")
+
+    private fun playNextMusic() {
+        val currentList = App.playListManager.getCurrentPlayList()
+        currentList ?: return
+        if (++mMusicIndicator == currentList.trackCount) {
+            mMusicIndicator = 0
+        }
+        currentList.tracks ?: return
+        playMusic(currentList.tracks[mMusicIndicator])
+    }
+
+    private fun playPrevMusic() {
+        val currentList = App.playListManager.getCurrentPlayList()
+        currentList ?: return
+        if (--mMusicIndicator < 0) {
+            mMusicIndicator = currentList.trackCount - 1
+        }
+        currentList.tracks ?: return
+        playMusic(currentList.tracks[mMusicIndicator])
+    }
+
+    inner class MusicControlBinder : Binder() {
+
+        fun updateTopListener(listener: MusicPlayStatusListener?) {
+            topListener = listener
+            topListener?.onActivate()
+        }
+
+        fun play() {
+            if (mPlayer.isPause()) {
+                mPlayer.start()
+            } else {
+                playMusic(App.playListManager.getCurrentPlayList()?.tracks?.get(mMusicIndicator) ?: return)
+            }
+        }
+
+        fun pause() = mPlayer.pause()
+
+        fun stop() = mPlayer.stop()
+
+        fun playNext() = playNextMusic()
+
+        fun playPrev() = playPrevMusic()
+
+        fun getCurrentMusicIndicator() = mMusicIndicator
+
+        fun getCurrentProgress() = mPlayer.currentPosition
+
+        fun getDuration() = mPlayer.duration
+
+        fun getStatus() = mPlayer.mPlayStatus
+
+        fun isPlaying() = mPlayer.isPlaying
+    }
+
+    interface MusicPlayStatusListener {
+        fun onActivate()
+        fun onPlayStart()
+        fun onPlayPause()
+        fun onPlayStop()
+        fun onPlayProgressUpdate(progress: Int)
+    }
+}

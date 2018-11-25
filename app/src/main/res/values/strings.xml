@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Elf</string>
+
+    <string name="daily_recommend">日推 Daily Recommend</string>
+    <string name="comments_plaza">广场 Comments Plaza</string>
+    <string name="my_collection">我的收藏 My Collection</string>
+    <string name="setting">设置 Setting</string>
+
+    <string name="menu_share">分享</string>
+    <string name="top_10">热门单曲TOP 10</string>
+
+    <string name="accomplish">完成</string>
+    <string name="skip">跳过</string>
+    <string name="hint_star">这是今日份的开心，写点什么吧</string>
+    <string name="sure">是的</string>
+    <string name="cancel">算了</string>
 </resources>

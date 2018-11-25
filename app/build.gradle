@@ -34,6 +34,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     //test utils
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -43,4 +44,24 @@ dependencies {
             implementation it.value
         }
     }
+
+    compilers.each {
+        it.value.each {
+            kapt it.value
+        }
+    }
+
+    // RoundImageView
+    implementation "com.makeramen:roundedimageview:2.3.0"
+
+    // 代理media请求，实现缓存
+    implementation 'com.danikula:videocache:2.7.1'
+
+    // 滑动切换Activity
+    implementation('com.r0adkll:slidableactivity:2.0.6') {
+        exclude group: 'com.android.support'
+    }
+
+    // 歌词
+    implementation 'me.wcy:lrcview:2.0.1'
 }
