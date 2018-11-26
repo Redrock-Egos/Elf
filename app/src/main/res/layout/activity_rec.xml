@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
     tools:context=".ui.activity.RecActivity">
 
     <include layout="@layout/include_toolbar_backable" />
@@ -14,6 +13,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -52,17 +52,19 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
-                android:text="王家卫，出生于上海，5岁时随家移居香港。毕业于香港理工学院美术设计系。1981年考进无线电视台第一期编导培训班。1988年王家卫自编自导第一部电影《旺角卡门》，影片由刘德华、张曼玉、万梓良等主演。这部电影在传统的江湖片中拍出新意，获得成功。让我们随着原声音乐走进他的电影世界。"
+                android:lineSpacingMultiplier="1.3"
+                tools:text="王家卫，出生于上海，5岁时随家移居香港。毕业于香港理工学院美术设计系。1981年考进无线电视台第一期编导培训班。1988年王家卫自编自导第一部电影《旺角卡门》，影片由刘德华、张曼玉、万梓良等主演。这部电影在传统的江湖片中拍出新意，获得成功。让我们随着原声音乐走进他的电影世界。"
+                android:textColor="#989898"
                 android:textSize="15sp" />
 
 
             <LinearLayout
-                android:background="@drawable/rec_cv_shape"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
+                android:background="@drawable/rec_cv_shape"
                 android:padding="10dp">
 
                 <android.support.v7.widget.CardView
@@ -76,37 +78,37 @@
 
 
                     <FrameLayout
-                        android:layout_gravity="center"
+                        android:id="@+id/rec_btn_play"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:foreground="#60000000"
-                            android:scaleType="centerCrop"
                             android:id="@+id/rec_iv_album_bg"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:foreground="#60000000"
+                            android:scaleType="centerCrop"
                             tools:background="@drawable/ic_launcher_background" />
+
                         <ImageView
-                            android:id="@+id/rec_btn_play"
-                            android:src="@drawable/ic_rec_play"
-                            android:layout_gravity="center"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_rec_play" />
                     </FrameLayout>
                 </android.support.v7.widget.CardView>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/rec_iv_album_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="王家卫的映画世界"
+                        tools:text="王家卫的映画世界"
                         android:textColor="#000000"
                         android:textSize="12sp" />
 
@@ -115,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="甘涛vinson"
+                        tools:text="甘涛vinson"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
