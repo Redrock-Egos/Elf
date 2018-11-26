@@ -23,7 +23,7 @@ object ApiGenerator {
         .build()
 
     private var elfRetrofitF = Retrofit.Builder()
-        .baseUrl("http://120.79.413.238/cqupt/")
+        .baseUrl("http://120.79.143.238/eif/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()

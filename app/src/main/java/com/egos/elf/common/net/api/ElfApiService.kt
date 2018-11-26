@@ -1,8 +1,10 @@
 package com.egos.elf.common.net.api
 
+import com.egos.elf.common.bean.RecAlbum
 import com.egos.elf.common.bean.elf.BaseElfBean
 import com.egos.elf.common.bean.elf.ID
 import com.egos.elf.common.bean.elf.Version
+import com.egos.elf.common.bean.moe.Album
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -16,5 +18,6 @@ interface ElfApiServiceH {
 }
 
 interface ElfApiServiceF {
-    //todo FS的接口
+    @GET("getRecAlbum")
+    fun getRecAlbum(@Query("mood") mood:String):Observable<RecAlbum>//不需要wrapper
 }

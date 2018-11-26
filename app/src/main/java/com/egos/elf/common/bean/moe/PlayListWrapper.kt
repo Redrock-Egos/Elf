@@ -18,7 +18,7 @@ data class Artist(
     @SerializedName("name")
     val artistName: String = "",
     @SerializedName("id")
-    val artistId: Int = 0
+    val artistId: Long = 0L
 )
 
 @Entity(tableName = "music")
@@ -66,7 +66,7 @@ data class Creator(
     @SerializedName("nickname")
     val nickname: String = "",
     @SerializedName("userId")
-    val userId: Int = 0,
+    val userId: Long = 0L,
     @SerializedName("gender")
     val gender: Int = 0,
     @SerializedName("signature")
@@ -87,7 +87,7 @@ data class PlayList(
     @SerializedName("trackCount")
     val trackCount: Int = 0,
     @SerializedName("id")
-    val id: Int = 0,
+    val id: Long = 0L,
     @SerializedName("totalDuration")
     val totalDuration: Int = 0,
     @SerializedName("creator")
