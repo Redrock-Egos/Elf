@@ -56,9 +56,10 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
 
     private fun playMusic(track: Music) {
         mPlayer.playMusic(getMusicPath(track.id))
+        topListener?.onActivate()
     }
 
-    private fun getMusicPath(id: Int) =
+    private fun getMusicPath(id: Long) =
         App.getProxy().getProxyUrl("http://music.163.com/song/media/outer/url?id=$id.mp3")
 
     private fun playNextMusic() {
@@ -88,17 +89,25 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
             topListener?.onActivate()
         }
 
+        fun getCurrentTrack() = App.playListManager.getCurrentPlayList()?.tracks?.get(mMusicIndicator)
+
         fun play() {
             if (mPlayer.isPause()) {
                 mPlayer.start()
             } else {
-                playMusic(App.playListManager.getCurrentPlayList()?.tracks?.get(mMusicIndicator) ?: return)
+                playMusic(getCurrentTrack() ?: return)
             }
         }
 
         fun pause() = mPlayer.pause()
 
         fun stop() = mPlayer.stop()
+
+        fun seekTo(pos: Int) {
+            mPlayer.pause()
+            mPlayer.seekTo(pos)
+            mPlayer.start()
+        }
 
         fun playNext() = playNextMusic()
 

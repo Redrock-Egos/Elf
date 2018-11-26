@@ -4,6 +4,8 @@ import android.arch.persistence.room.*
 import com.egos.elf.common.room.TypeConverterHelper
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.lang.StringBuilder
+import java.util.*
 
 data class PlayListWrapper(
     @SerializedName("result")
@@ -24,7 +26,7 @@ data class Artist(
 data class Music(
     @SerializedName("id")
     @PrimaryKey()
-    var id: Int = 0,
+    var id: Long = 0L,
     @SerializedName("duration")
     var duration: Int = 0,
     @SerializedName("artists")
@@ -37,8 +39,22 @@ data class Music(
     @Expose(serialize = false, deserialize = false)
     var like: Boolean = false,
     @Expose(serialize = false, deserialize = false)
-    var star: Boolean = false
-)
+    var star: Boolean = false,
+    @Expose(serialize = false, deserialize = false)
+    @ColumnInfo(name = "star_date")
+    var starDate: Long = 0L,
+    @Expose(serialize = false, deserialize = false)
+    var category: String = ""
+) {
+    val artistNameStr: String
+        get() {
+            val sb = StringBuilder()
+            artists?.forEach {
+                sb.append(it).append("/")
+            }
+            return sb.toString()
+        }
+}
 
 data class Album(
     @SerializedName("blurPicUrl")

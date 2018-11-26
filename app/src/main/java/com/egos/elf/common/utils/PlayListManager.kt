@@ -35,7 +35,6 @@ class PlayListManager {
     }
 
     fun updatePlayList(key: String, playList: PlayList) {
-        playList.tracks?.shuffle()
         playlistMap[key] = playList
         if (key == keySequence[0]) {
             currentListChangeListener?.invoke()

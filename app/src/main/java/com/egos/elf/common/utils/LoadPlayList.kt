@@ -17,6 +17,7 @@ fun loadMoodPlayList() {
         if (playListID != 0L) {
             withSPCache(playListID.toString(), PlayListWrapper::class.java, { moeService.getPlayList(playListID) }, {
                 if (playListID == sp.getLong(mood.name, 0L))
+                    it.result.tracks?.shuffle()
                     App.playListManager.updatePlayList(mood.name, it.result)
             })
         }
@@ -34,6 +35,7 @@ fun loadMoodPlayList() {
                     PlayListWrapper::class.java,
                     { moeService.getPlayList(it.data.id) },
                     { wrapper ->
+                        wrapper.result.tracks?.shuffle()
                         App.playListManager.updatePlayList(mood.name, wrapper.result)
                     })
             }

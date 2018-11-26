@@ -7,7 +7,7 @@ data class LyricWrapper(
     @SerializedName("code")
     val code: Int = 0,
     @SerializedName("lrc")
-    val lrc: Lrc
+    val lrc: Lrc? = null
 )
 
 data class Lrc(

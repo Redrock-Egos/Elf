@@ -39,6 +39,12 @@ abstract class BaseActivity : AppCompatActivity(), MusicService.MusicPlayStatusL
         }
     }
 
+
+    protected val BaseActivity.common_toolbar get() = toolbar
+    protected fun setTitle(title: String) {
+        toolbar_title.text = title
+    }
+
     protected fun Toolbar.init(
         title: String,
         @DrawableRes icon: Int = R.drawable.ic_back,
@@ -53,8 +59,6 @@ abstract class BaseActivity : AppCompatActivity(), MusicService.MusicPlayStatusL
             setNavigationOnClickListener(listener)
         }
     }
-
-    protected val BaseActivity.common_toolbar get() = toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -17,7 +17,7 @@ object ApiGenerator {
         .build()
 
     private var elfRetrofitH = Retrofit.Builder()
-        .baseUrl("http://elf.hosigus.tech/")
+        .baseUrl("http://elf.egos.hosigus.tech/")
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .build()

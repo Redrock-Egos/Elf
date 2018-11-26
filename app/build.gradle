@@ -64,4 +64,8 @@ dependencies {
 
     // 歌词
     implementation 'me.wcy:lrcview:2.0.1'
+
+    // 收藏页转换，fragment
+    implementation "android.arch.navigation:navigation-fragment:1.0.0-alpha07"
+    implementation "android.arch.navigation:navigation-ui:1.0.0-alpha07"
 }
