@@ -54,6 +54,9 @@ dependencies {
     // RoundImageView
     implementation "com.makeramen:roundedimageview:2.3.0"
 
+    // CircleImageView
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
     // 代理media请求，实现缓存
     implementation 'com.danikula:videocache:2.7.1'
 
