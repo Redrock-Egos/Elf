@@ -1,0 +1,19 @@
+package com.egos.elf.ui.fragment
+
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.egos.elf.R
+
+class StarPlayListFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_star_play_list, container, false)
+    }
+
+}

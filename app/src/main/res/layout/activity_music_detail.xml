@@ -7,22 +7,22 @@
     tools:context=".ui.activity.MusicDetailActivity">
 
     <include
-        android:id="@+id/toolbar"
-        layout="@layout/include_toolbar_backable"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/app_bar_layout"
+            layout="@layout/include_toolbar_backable"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/tv_singer_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/toolbarSubTitleColor"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:text="Imagine Dragons" />
+            android:id="@+id/tv_singer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/toolbarSubTitleColor"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_layout"
+            tools:text="Imagine Dragons"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/gl_left"

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_star"
+            app:startDestination="@id/star_music_item_fragment">
+    <fragment
+            android:id="@+id/star_music_item_fragment"
+            android:name="com.egos.elf.ui.fragment.StarMusicItemFragment"
+            android:label="ItemFragment">
+        <action
+                android:id="@+id/action_star_music_item_fragment_to_star_playlist_fragment2"
+                app:destination="@id/star_playlist_fragment"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/star_playlist_fragment"
+            android:name="com.egos.elf.ui.fragment.StarPlayListFragment"
+            android:label="ListFragment">
+        <action
+                android:id="@+id/action_star_playlist_fragment_to_star_music_item_fragment2"
+                app:destination="@id/star_music_item_fragment"/>
+    </fragment>
+</navigation>

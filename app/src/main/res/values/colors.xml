@@ -20,5 +20,7 @@
     <color name="star_info_hint">#7a000000</color>
     <color name="star_info_input">#D9000000</color>
     <color name="star_info_btn">#5476ac</color>
+    <color name="star_item_music_name">#e6000000</color>
+    <color name="star_item_music_singer_name">#b3000000</color>
 
 </resources>

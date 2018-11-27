@@ -8,10 +8,14 @@ import com.egos.elf.R
 import com.egos.elf.common.base.BaseActivity
 import com.egos.elf.common.net.ApiGenerator
 import com.egos.elf.common.utils.ToastUtils
+import com.egos.elf.common.utils.insertMusic
 import com.egos.elf.common.utils.safeSubscribeBy
+import com.egos.elf.common.utils.selectMusicById
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_music_detail.*
+import java.text.DecimalFormat
+import java.util.*
 
 class MusicDetailActivity : BaseActivity() {
     override fun onActivate() {
@@ -40,8 +44,17 @@ class MusicDetailActivity : BaseActivity() {
                     }
                 }
 
-            iv_like.setImageResource(if (App.elfDatabase.getEntryDao().selectLikeById(id)) R.drawable.ic_like_on else R.drawable.ic_like_off)
-            iv_star.setImageResource(if (App.elfDatabase.getEntryDao().selectStarById(id)) R.drawable.ic_star_on else R.drawable.ic_star_off)
+            iv_like.setImageResource(if (like) R.drawable.ic_like_on else R.drawable.ic_like_off)
+            iv_star.setImageResource(if (star) R.drawable.ic_star_on else R.drawable.ic_star_off)
+
+            selectMusicById(id).safeSubscribeBy(onError = { it.printStackTrace() }, onNext = {
+                it ?: return@safeSubscribeBy
+                like = it.like
+                star = it.star
+                category = it.category
+                iv_like.setImageResource(if (it.like) R.drawable.ic_like_on else R.drawable.ic_like_off)
+                iv_star.setImageResource(if (it.star) R.drawable.ic_star_on else R.drawable.ic_star_off)
+            })
 
         }
 
@@ -72,6 +85,7 @@ class MusicDetailActivity : BaseActivity() {
     override fun onPlayProgressUpdate(progress: Int) {
         bar_music.progress = progress
         lrc_detail.updateTime(progress.toLong())
+        tv_cur_time.text = formatTime(musicControlBinder?.getCurrentProgress() ?: 0)
     }
 
     override val resId: Int
@@ -115,8 +129,35 @@ class MusicDetailActivity : BaseActivity() {
             musicControlBinder?.seekTo(it.toInt())
             return@setOnPlayClickListener true
         }
+
+        iv_like.setOnClickListener { _ ->
+            musicControlBinder?.getCurrentTrack()?.let {
+                it.like = !it.like
+                iv_like.setImageResource(if (it.like) R.drawable.ic_like_on else R.drawable.ic_like_off)
+                insertMusic(music = it)
+            }
+        }
+
+        iv_star.setOnClickListener { _ ->
+            musicControlBinder?.getCurrentTrack()?.let { music ->
+                if (music.star) {
+                    music.star = !music.star
+                    insertMusic(music)
+                    iv_star.setImageResource(if (music.star) R.drawable.ic_star_on else R.drawable.ic_star_off)
+                } else {
+                    siv_detail.show(music.mood) {
+                        music.star = !music.star
+                        music.category = it
+                        music.starDate = Date().time / 3600L * 3600L
+                        insertMusic(music)
+                        iv_star.setImageResource(if (music.star) R.drawable.ic_star_on else R.drawable.ic_star_off)
+                    }
+                }
+            }
+        }
     }
 
-    private fun formatTime(time: Int) = (time / 1000).let { "${it / 60}:${String.format("%2d", it % 60)}" }
+    private val formater = DecimalFormat("00")
+    private fun formatTime(time: Int) = (time / 1000).let { "${it / 60}:${formater.format(it % 60)}" }
 
 }

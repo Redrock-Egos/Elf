@@ -21,7 +21,7 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
         mMusicControlBinder = MusicControlBinder()
         mPlayer = ElfMusicPlayer()
         mPlayer.mStatusListener = this
-        App.playListManager.currentListChangeListener = {
+        App.playListManager.changeListener = {
             mMusicIndicator = -1
             playNextMusic()
         }
@@ -65,7 +65,7 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
     private fun playNextMusic() {
         val currentList = App.playListManager.getCurrentPlayList()
         currentList ?: return
-        if (++mMusicIndicator == currentList.trackCount) {
+        if (++mMusicIndicator == currentList.tracks.size) {
             mMusicIndicator = 0
         }
         currentList.tracks ?: return
@@ -76,7 +76,7 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
         val currentList = App.playListManager.getCurrentPlayList()
         currentList ?: return
         if (--mMusicIndicator < 0) {
-            mMusicIndicator = currentList.trackCount - 1
+            mMusicIndicator = currentList.tracks.size - 1
         }
         currentList.tracks ?: return
         playMusic(currentList.tracks[mMusicIndicator])
@@ -122,6 +122,16 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
         fun getStatus() = mPlayer.mPlayStatus
 
         fun isPlaying() = mPlayer.isPlaying
+
+        fun setPlayPos(pos: Int) {
+            val currentList = App.playListManager.getCurrentPlayList()
+            currentList ?: return
+            if (pos >= currentList.tracks.size || pos < 0) {
+                return
+            }
+            mMusicIndicator = pos
+            play()
+        }
     }
 
     interface MusicPlayStatusListener {

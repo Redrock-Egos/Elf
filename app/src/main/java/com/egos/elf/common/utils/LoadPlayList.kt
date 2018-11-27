@@ -35,7 +35,20 @@ fun loadMoodPlayList() {
                     PlayListWrapper::class.java,
                     { moeService.getPlayList(it.data.id) },
                     { wrapper ->
-                        wrapper.result.tracks?.shuffle()
+                        wrapper.result.tracks.shuffle()
+                        wrapper.result.tracks.let { list ->
+                            if (list.isEmpty()) {
+                                return@let
+                            }
+
+                            if (list[0].mood != mood) {
+                                list.forEach { mu ->
+                                    mu.mood = mood
+                                }
+                                putBeanToSP(it.data.id.toString(), wrapper)
+                            }
+                        }
+
                         App.playListManager.updatePlayList(mood.name, wrapper.result)
                     })
             }

@@ -207,6 +207,7 @@ class MainActivity : BaseActivity() {
         //todo：前往不同的页面
 //      音乐详情
         ibtn_more_main.setOnClickListener {
+            startMusicDetailActivity(this@MainActivity)
         }
 
         nv_setting.setNavigationItemSelectedListener {
@@ -224,7 +225,7 @@ class MainActivity : BaseActivity() {
                 )
 
                 resources.getString(R.string.my_collection) -> {
-
+                    startShowStarActivity(this@MainActivity)
                 }
             }
             dl_main.closeDrawer(nv_setting)

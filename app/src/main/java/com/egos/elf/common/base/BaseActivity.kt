@@ -51,7 +51,6 @@ abstract class BaseActivity : AppCompatActivity(), MusicService.MusicPlayStatusL
         listener: View.OnClickListener? = View.OnClickListener { finish() }
     ) {
         toolbar_title.text = title
-        setSupportActionBar(this)
         if (listener == null) {
             navigationIcon = null
         } else {

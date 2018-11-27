@@ -3,6 +3,7 @@ package com.egos.elf.common.utils
 import android.content.SharedPreferences
 import com.egos.elf.common.bean.Mood
 import com.egos.elf.common.bean.moe.PlayList
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class PlayListManager {
     companion object {
@@ -13,7 +14,7 @@ class PlayListManager {
     private val playlistMap = mutableMapOf<String, PlayList>()
     private val keySequence = mutableListOf<String>()
 
-    var currentListChangeListener: (() -> Unit)? = null
+    var changeListener: (() -> Unit)? = null
 
     private val sp: SharedPreferences
 
@@ -37,7 +38,7 @@ class PlayListManager {
     fun updatePlayList(key: String, playList: PlayList) {
         playlistMap[key] = playList
         if (key == keySequence[0]) {
-            currentListChangeListener?.invoke()
+            AndroidSchedulers.mainThread().scheduleDirect { changeListener?.invoke() }
         }
     }
 
@@ -55,6 +56,7 @@ class PlayListManager {
                 }
             }
         }
+        AndroidSchedulers.mainThread().scheduleDirect { changeListener?.invoke() }
     }
 
     fun useKeySequence(use: (key: String) -> Unit) {

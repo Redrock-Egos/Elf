@@ -26,14 +26,7 @@ class StarInfoView @JvmOverloads constructor(
         tv_date.text = Calendar.getInstance().let {
             "${it.get(Calendar.YEAR)}.${it.get(Calendar.MONTH)}.${it.get(Calendar.DAY_OF_MONTH)}"
         }
-        iv_mood.setImageResource(
-            when (mood) {
-                Mood.UNHAPPY -> R.drawable.ic_mood_unhappy
-                Mood.CLAM -> R.drawable.ic_mood_clam
-                Mood.EXCITING -> R.drawable.ic_mood_exciting
-                Mood.HAPPY -> R.drawable.ic_mood_happy
-            }
-        )
+        iv_mood.setImageResource(mood.drawableResId)
         tv_confirm.setOnClickListener {
             val input = input.editText?.text.toString()
             if (input.isBlank()) {

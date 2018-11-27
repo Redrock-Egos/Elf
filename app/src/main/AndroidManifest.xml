@@ -16,16 +16,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
         <activity android:name=".ui.activity.MainActivity"/>
         <activity android:name=".ui.activity.MusicDetailActivity"/>
         <activity android:name=".ui.activity.RecActivity"/>
         <activity android:name=".ui.activity.RecDetailActivity"/>
         <activity android:name=".ui.activity.ShowStarActivity"/>
-
-        <service
-                android:name=".common.service.MusicService"
-                android:enabled="true"
-                android:exported="true"/>
 
         <activity android:name=".ui.activity.WelcomeActivity">
             <intent-filter>
@@ -34,8 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.PiazzaActivity">
-        </activity>
+        <activity android:name=".ui.activity.PiazzaActivity"/>
+
+        <service
+                android:name=".common.service.MusicService"
+                android:enabled="true"
+                android:exported="true"/>
     </application>
 
 </manifest>

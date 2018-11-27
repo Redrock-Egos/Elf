@@ -1,6 +1,7 @@
 package com.egos.elf.common.bean.moe
 
 import android.arch.persistence.room.*
+import com.egos.elf.common.bean.Mood
 import com.egos.elf.common.room.TypeConverterHelper
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -42,7 +43,9 @@ data class Music(
     @ColumnInfo(name = "star_date")
     var starDate: Long = 0L,
     @Expose(serialize = false, deserialize = false)
-    var category: String = ""
+    var category: String = "",
+    @Expose(serialize = false, deserialize = false)
+    var mood: Mood = Mood.HAPPY
 ) {
     val artistNameStr: String
         get() {
@@ -82,8 +85,6 @@ data class Creator(
 data class PlayList(
     @SerializedName("description")
     val description: String = "",
-    @SerializedName("trackCount")
-    val trackCount: Int = 0,
     @SerializedName("id")
     val id: Long = 0L,
     @SerializedName("totalDuration")
@@ -97,7 +98,7 @@ data class PlayList(
     @SerializedName("userId")
     val userId: Int = 0,
     @SerializedName("tracks")
-    val tracks: MutableList<Music>? = null,
+    val tracks: MutableList<Music> = mutableListOf(),
     @SerializedName("coverImgUrl")
     val coverImgUrl: String = "",
     @SerializedName("name")
