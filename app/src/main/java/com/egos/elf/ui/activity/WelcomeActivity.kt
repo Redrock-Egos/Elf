@@ -11,11 +11,15 @@ class WelcomeActivity : BaseNoNeedListenActivity() {
     override val resId: Int
         get() = R.layout.activity_welcome
 
+    override val needSlide: Boolean
+        get() = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadMoodPlayList()
         Handler().postDelayed({
             startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
+            finish()
         }, 3 * 1000)
     }
 }

@@ -4,8 +4,6 @@ import android.arch.persistence.room.*
 import com.egos.elf.common.room.TypeConverterHelper
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.lang.StringBuilder
-import java.util.*
 
 data class PlayListWrapper(
     @SerializedName("result")
@@ -50,9 +48,9 @@ data class Music(
         get() {
             val sb = StringBuilder()
             artists?.forEach {
-                sb.append(it).append("/")
+                sb.append(it.artistName).append("/")
             }
-            return sb.toString()
+            return sb.substring(0, sb.length - 1).toString()
         }
 }
 

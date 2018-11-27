@@ -80,7 +80,6 @@ abstract class BaseActivity : AppCompatActivity(), MusicService.MusicPlayStatusL
     }
 
     override fun onDestroy() {
-        musicControlBinder?.updateTopListener(null)
         unbindService()
         super.onDestroy()
     }

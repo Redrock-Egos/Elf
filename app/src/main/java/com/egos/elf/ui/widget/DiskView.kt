@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.AppCompatImageView
@@ -28,6 +27,14 @@ class DiskView @JvmOverloads constructor(
         strokeWidth = (discSize - picSize) / 4f
     }
     private var disk: Bitmap
+    private val animator by lazy {
+        ObjectAnimator.ofFloat(this, "alpha", 1f, 0f, 1f)
+            .apply {
+                duration = 800
+                interpolator = LinearInterpolator()
+                repeatCount = 0
+            }
+    }
 
 
     private val picSize: Float
@@ -37,11 +44,16 @@ class DiskView @JvmOverloads constructor(
         get() = (230.0 / 375.0 * screenWidth).toFloat()
 
     init {
-        disk = initDisk()
+        disk = initDisk(null)
     }
 
-    private fun initDisk(): Bitmap {
-        val rawBitmap = getBitmap(drawable)
+    private fun initDisk(draw: Drawable?): Bitmap {
+        val rawBitmap = if (draw == null) {
+            (ContextCompat.getDrawable(context, R.drawable.ic_default_bottom_music_icon)
+                    as BitmapDrawable).bitmap
+        } else {
+            (draw as BitmapDrawable).bitmap
+        }
         val mShader = BitmapShader(
             rawBitmap,
             Shader.TileMode.CLAMP, Shader.TileMode.CLAMP
@@ -74,42 +86,15 @@ class DiskView @JvmOverloads constructor(
         canvas.drawBitmap(disk, left.toFloat(), top.toFloat(), null)
     }
 
-    private fun getBitmap(drawable: Drawable?): Bitmap {
-        return when (drawable) {
-            is BitmapDrawable -> drawable.bitmap
-            is ColorDrawable -> {
-                val rect = drawable.getBounds()
-                val width = rect.right - rect.left
-                val height = rect.bottom - rect.top
-                val color = drawable.color
-                val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(bitmap)
-                canvas.drawARGB(Color.alpha(color), Color.red(color), Color.green(color), Color.blue(color))
-                bitmap
-            }
-            null -> (ContextCompat.getDrawable(
-                context,
-                R.drawable.ic_default_bottom_music_icon
-            ) as BitmapDrawable).bitmap
-            else -> (drawable as BitmapDrawable).bitmap
-        }
-    }
-
-    fun upDatePicture() {
+    fun upDatePicture(drawable: Drawable) {
         var isUpdate = false
-        ObjectAnimator.ofFloat(this, "alpha", 1f, 0f, 1f)
-            .apply {
-                duration = 1500
-                interpolator = LinearInterpolator()
-                repeatCount = 0
-                start()
-                addUpdateListener { it ->
-                    if ((it.animatedValue as Float) < 0.2 && !isUpdate) {
-                        disk = initDisk()
-                        postInvalidate()
-                        isUpdate = true
-                    }
-                }
+        animator.addUpdateListener { it ->
+            if ((it.animatedValue as Float) < 0.2 && !isUpdate) {
+                disk = initDisk(drawable)
+                postInvalidate()
+                isUpdate = true
             }
+        }
+        animator.start()
     }
 }

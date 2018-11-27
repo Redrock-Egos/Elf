@@ -9,9 +9,7 @@ import android.view.LayoutInflater
 import android.view.animation.LinearInterpolator
 import com.egos.elf.R
 import com.egos.elf.common.bean.moe.Music
-import com.egos.elf.common.utils.gone
 import com.egos.elf.common.utils.screenWidth
-import com.egos.elf.common.utils.visible
 import kotlinx.android.synthetic.main.include_disk.view.*
 
 /*
@@ -63,15 +61,7 @@ class MusicInfoLayout @JvmOverloads constructor(
 
     fun initMusicTextData(currentMusic: Music) {
         tv_name_song.text = currentMusic.name
-        var info = StringBuilder()
-        currentMusic.artists?.size?.let { it ->
-            repeat(it) {
-                info.append(currentMusic.artists!![it].artistName)
-                info.append("/")
-            }
-        }
-        info = StringBuilder(info.substring(0, info.length - 1))
-        tv_name_singer.text = info.toString()
+        tv_name_singer.text = currentMusic.artistNameStr
     }
 
     fun changeDiskState() {
@@ -97,24 +87,6 @@ class MusicInfoLayout @JvmOverloads constructor(
     fun stopDisk() {
         totalAnimator.end()
         backgroundAnimator.end()
-    }
-
-    fun discDisappear() {
-        ObjectAnimator.ofFloat(this, "alpha", 1f, 0f)
-            .apply {
-                duration = 1500
-                start()
-            }
-        this.gone()
-    }
-
-    fun diskShow() {
-        this.visible()
-        ObjectAnimator.ofFloat(this, "alpha", 0f, 1f)
-            .apply {
-                duration = 1500
-                start()
-            }
     }
 }
 

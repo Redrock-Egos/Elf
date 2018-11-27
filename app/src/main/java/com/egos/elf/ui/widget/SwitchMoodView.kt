@@ -82,7 +82,7 @@ class SwitchMoodView @JvmOverloads constructor(
         updateRes()
     }
 
-    private fun updateRes() {
+    fun updateRes() {
         currentRes.clear()
         App.playListManager.useKeySequence {
             currentRes.add(

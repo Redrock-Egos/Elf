@@ -12,6 +12,7 @@
             android:id="@+id/cim_avatar"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_disk_src" />
 
     <TextView

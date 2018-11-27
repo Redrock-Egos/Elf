@@ -3,14 +3,19 @@ package com.egos.elf.ui.activity
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.widget.AppCompatImageView
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
 import android.widget.FrameLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomViewTarget
+import com.bumptech.glide.request.transition.Transition
 import com.egos.elf.App
 import com.egos.elf.R
 import com.egos.elf.common.base.BaseActivity
@@ -49,6 +54,8 @@ class MainActivity : BaseActivity() {
     private var isCommendShow = false
     private var isDialogShow = false
 
+    private val TAG = "MainActivity"
+
     override val resId: Int
         get() = R.layout.activity_main
 
@@ -58,9 +65,16 @@ class MainActivity : BaseActivity() {
     override fun onActivate() {
         musicControlBinder?.getCurrentTrack()?.apply {
             discView.initMusicTextData(this)
-            Glide.with(this@MainActivity).asDrawable().load(album?.blurPicUrl).into(disk_view)
-            disk_view.upDatePicture()
+            Glide.with(this@MainActivity).load(album?.blurPicUrl).into(object : CustomViewTarget<AppCompatImageView,Drawable>(disk_view) {
+                override fun onResourceCleared(placeholder: Drawable?) = Unit
 
+                override fun onLoadFailed(errorDrawable: Drawable?) = Unit
+
+                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                    disk_view.upDatePicture(resource)
+                }
+
+            })
             ApiGenerator.getMoeApiService()
                 .getLyric(id)
                 .subscribeOn(Schedulers.io())
@@ -91,7 +105,7 @@ class MainActivity : BaseActivity() {
         if (isCommendShow) {
             showTime = Math.random() * 0.01 + 0.03
         }
-        if (unhappyTimes > 2 && Mood.valueOf(App.playListManager.getKeySequence(0)) == Mood.UNHAPPY && !isDialogShow) {
+        if (unhappyTimes > 5 && Mood.valueOf(App.playListManager.getKeySequence(0)) == Mood.UNHAPPY && !isDialogShow) {
             val view = View.inflate(this, R.layout.include_card, null).apply {
                 tv_card_text.text = "还是很沮丧吗？来点开心的吧！"
                 btn_card_sure.setOnClickListener {
@@ -127,9 +141,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    override fun onPlayStop() {
-        discView.stopDisk()
-    }
+    override fun onPlayStop() = Unit
 
     @SuppressLint("SetTextI18n")
     override fun onPlayProgressUpdate(progress: Int) {
@@ -162,7 +174,7 @@ class MainActivity : BaseActivity() {
                     (45 / 375.0 * screenWidth).toInt(),
                     (37 / 667.0 * screenHeight).toInt(),
                     (45 / 375.0 * screenWidth).toInt(),
-                    (557 / 667.0 * screenHeight).toInt()
+                    (587 / 667.0 * screenHeight).toInt()
                 )
             }
             this@MainActivity.dl_main.addView(view, param)
@@ -194,7 +206,7 @@ class MainActivity : BaseActivity() {
 
         //todo：前往不同的页面
 //      音乐详情
-        ibtn_more.setOnClickListener {
+        ibtn_more_main.setOnClickListener {
         }
 
         nv_setting.setNavigationItemSelectedListener {
@@ -203,16 +215,28 @@ class MainActivity : BaseActivity() {
                 }
                 resources.getString(R.string.setting) -> {
                 }
-                resources.getString(R.string.comments_plaza) -> {
-                }
+
+                resources.getString(R.string.comments_plaza) -> startActivity(
+                    Intent(
+                        this@MainActivity,
+                        PiazzaActivity::class.java
+                    )
+                )
+
                 resources.getString(R.string.my_collection) -> {
 
                 }
             }
+            dl_main.closeDrawer(nv_setting)
             true
         }
 
 
+    }
+
+    override fun onResume() {
+        smv_main.updateRes()
+        super.onResume()
     }
 
     private fun changeView() {
@@ -256,10 +280,11 @@ class MainActivity : BaseActivity() {
         }
         if (ev.action == MotionEvent.ACTION_UP) {
             x2 = ev.x
-            when {x1 - x2 > screenWidth / 3f -> {
-                musicControlBinder?.playNext()
-                return true
-            }
+            when {
+                x1 - x2 > screenWidth / 3f -> {
+                    musicControlBinder?.playNext()
+                    return true
+                }
                 x2 - x1 > screenWidth / 3f -> {
                     musicControlBinder?.playPrev()
                     return true
