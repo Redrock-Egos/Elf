@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import com.egos.elf.App
 import com.egos.elf.R
 import com.egos.elf.common.bean.Mood.*
+import com.egos.elf.common.utils.PlayListManager.Companion.DEFAULT_PLAY_LIST_KEY
 import com.egos.elf.common.utils.invisible
 import com.egos.elf.common.utils.screenHeight
 import com.egos.elf.common.utils.screenWidth
@@ -24,25 +25,16 @@ class SwitchMoodView @JvmOverloads constructor(
     private val views by lazy { mutableListOf(iv_current, iv_bottom, iv_center, iv_top) }
     private val currentRes = mutableListOf<Int>()
     private var isExpand = false
+    private var isDefault = false
+    private var listener: NotifyDataChangedListener? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.include_buttons, this, true)
-        App.playListManager.useKeySequence {
-            currentRes.add(
-                when (valueOf(it)) {
-                    HAPPY -> R.drawable.ic_mood_happy
-                    CLAM -> R.drawable.ic_mood_clam
-                    UNHAPPY -> R.drawable.ic_mood_unhappy
-                    EXCITING -> R.drawable.ic_mood_exciting
-                }
-            )
-        }
-        initListener()
         updateRes()
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val width = MeasureSpec.makeMeasureSpec((55 / 375.0 * screenWidth).toInt(), MeasureSpec.EXACTLY)
+        val width = MeasureSpec.makeMeasureSpec((60 / 375.0 * screenWidth).toInt(), MeasureSpec.EXACTLY)
         val height = MeasureSpec.makeMeasureSpec((225 / 667.0 * screenHeight).toInt(), MeasureSpec.EXACTLY)
         super.onMeasure(width, height)
     }
@@ -63,28 +55,28 @@ class SwitchMoodView @JvmOverloads constructor(
         }
     }
 
-    private fun initListener() {
-        repeat(views.size) { index ->
-            if (index == 0) {
-                views[index].setOnClickListener { changeMood() }
-            } else {
-                views[index].setOnClickListener { updateData(index) }
-            }
-        }
-    }
-
-
-    private fun updateData(pos : Int) {
+    private fun updateData(pos: Int) {
         App.playListManager.apply {
             val temp = getKeySequence(pos)
             updateKeySequence(temp)
+            if (listener != null) {
+                listener!!.currentState()
+            }
         }
+        if (isDefault) {
+            isDefault = false
+        }
+        changeMood()
         updateRes()
     }
 
     fun updateRes() {
         currentRes.clear()
         App.playListManager.useKeySequence {
+            if (it == DEFAULT_PLAY_LIST_KEY) {
+                currentRes.add(R.drawable.ic_mood_default)
+                return@useKeySequence
+            }
             currentRes.add(
                 when (valueOf(it)) {
                     HAPPY -> R.drawable.ic_mood_happy
@@ -102,6 +94,24 @@ class SwitchMoodView @JvmOverloads constructor(
                 views[index].setOnClickListener { updateData(index) }
             }
         }
+    }
+
+    fun setListener(listener: NotifyDataChangedListener) {
+        this.listener = listener
+    }
+
+    fun removeListener() {
+        listener = null
+    }
+
+    fun setDefaultMood() {
+        App.playListManager.updateKeySequence(DEFAULT_PLAY_LIST_KEY)
+        updateRes()
+        isDefault = true
+    }
+
+    interface NotifyDataChangedListener {
+        fun currentState()
     }
 
 }

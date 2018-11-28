@@ -1,31 +1,22 @@
 package com.egos.elf.ui.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.egos.elf.App
 import com.egos.elf.R
-import com.egos.elf.common.base.BaseActivity
-import com.egos.elf.common.bean.TestData
+import com.egos.elf.common.base.BaseNoNeedListenActivity
+import com.egos.elf.common.utils.PlayListManager
+import com.egos.elf.common.utils.startMusicDetailActivity
+import com.egos.elf.model.PiazzaViewModel
 import com.egos.elf.ui.adapter.PiazzaAdapter
+import com.egos.elf.ui.widget.SwitchMoodView
 import kotlinx.android.synthetic.main.activity_piazza.*
 
-class PiazzaActivity : BaseActivity() {
-    override fun onPlayStart() = Unit
+class PiazzaActivity : BaseNoNeedListenActivity(),SwitchMoodView.NotifyDataChangedListener {
 
-    override fun onPlayPause() = Unit
-
-    override fun onPlayStop() = Unit
-
-    override fun onPlayProgressUpdate(progress: Int) = Unit
-
-    private lateinit var list : MutableList<TestData>
-
-    override fun onActivate() {
-        addTestData()
-        rv_piazza.apply {
-            adapter = PiazzaAdapter(list)
-            layoutManager = LinearLayoutManager(this@PiazzaActivity)
-        }
-    }
+    private val piazzaModel by lazy { ViewModelProviders.of(this@PiazzaActivity).get(PiazzaViewModel::class.java) }
+    private lateinit var adapter : PiazzaAdapter
 
     override val resId: Int
         get() = R.layout.activity_piazza
@@ -33,15 +24,31 @@ class PiazzaActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         common_toolbar.init("一些想说的")
+        adapter = PiazzaAdapter(mutableListOf()){
+            smv_piazza.setDefaultMood()
+            App.playListManager.updatePlayList(PlayListManager.DEFAULT_PLAY_LIST_KEY, it)
+        }
+        initData()
+        smv_piazza.setListener(this)
+        ibtn_more_piazza.setOnClickListener {
+            startMusicDetailActivity(this)
+        }
     }
 
-    private fun addTestData() {
-        list = mutableListOf()
-        musicControlBinder?.getCurrentTrack()?.let {
-            list.add(TestData(it,"二十分钟","http://picture.cynthial.cn/image1519927643040"))
+    private fun initData(){
+        piazzaModel.initData()
+        piazzaModel.commentList.observeForever {
+            if (it == null)
+                return@observeForever
+            adapter.setData(it)
         }
-        musicControlBinder?.getCurrentTrack()?.let {
-            list.add(TestData(it,"一小时","http://picture.cynthial.cn/image1519889754393"))
+        rv_piazza.apply {
+            adapter = this@PiazzaActivity.adapter
+            layoutManager = LinearLayoutManager(this@PiazzaActivity)
         }
+    }
+
+    override fun currentState() {
+        piazzaModel.updateData()
     }
 }

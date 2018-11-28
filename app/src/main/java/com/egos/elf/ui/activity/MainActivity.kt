@@ -1,10 +1,13 @@
 package com.egos.elf.ui.activity
 
+import android.Manifest
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.AppCompatImageView
@@ -22,9 +25,13 @@ import com.egos.elf.common.base.BaseActivity
 import com.egos.elf.common.bean.Mood
 import com.egos.elf.common.net.ApiGenerator
 import com.egos.elf.common.utils.*
+import com.egos.elf.common.utils.ToastUtils.show
 import com.egos.elf.ui.widget.MusicInfoLayout
 import com.egos.elf.ui.widget.MusicInfoLayout.Companion.STATE_PAUSE
 import com.egos.elf.ui.widget.MusicInfoLayout.Companion.STATE_PLAYING
+import com.tbruyelle.rxpermissions2.RxPermissions
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,6 +40,7 @@ import kotlinx.android.synthetic.main.include_card.view.*
 import kotlinx.android.synthetic.main.include_disk.*
 import kotlinx.android.synthetic.main.include_lyrics.view.*
 import kotlinx.android.synthetic.main.include_toolbar_backable.*
+import kotlinx.android.synthetic.main.view_change_name.*
 
 class MainActivity : BaseActivity() {
 
@@ -109,7 +117,7 @@ class MainActivity : BaseActivity() {
             val view = View.inflate(this, R.layout.include_card, null).apply {
                 tv_card_text.text = "还是很沮丧吗？来点开心的吧！"
                 btn_card_sure.setOnClickListener {
-
+//                   todo 心情转换成开心的..
                 }
                 btn_card_cancel.setOnClickListener {
                     dl_main.removeView(this)
@@ -192,20 +200,54 @@ class MainActivity : BaseActivity() {
             if (!dl_main.isDrawerOpen(nv_setting)) {
                 dl_main.openDrawer(nv_setting)
 
-                //      todo 修改个人信息
-                cim_avatar.setOnClickListener {
-
+                tv_nickname.text = defaultSp.getString("userName","Self")
+                val uri = defaultSp.getString("userAvatar",null)
+                if (uri == null){
+//              todo 默认头像加载
+                } else {
+                    Glide.with(this).load(Uri.parse(uri)).into(cim_avatar)
                 }
 
-                tv_nickname.setOnClickListener {
 
+                cim_avatar.setOnClickListener {_ ->
+                    RxPermissions(this@MainActivity)
+                        .request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .subscribe {
+                            if (it) {
+                                Matisse.from(this@MainActivity)
+                                    .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+                                    .countable(false)
+                                    .maxSelectable(1)
+                                    .thumbnailScale(0.80f)
+                                    .theme(R.style.Matisse_Zhihu)
+                                    .imageEngine(ImageEngine())
+                                    .capture(false)
+                                    .forResult(0)
+                            } else {
+                                show("抱歉暂时不能打开相册呢")
+                            }
+                        }
+                }
+
+                tv_nickname.setOnClickListener { _ ->
+                    Dialog(this@MainActivity).apply {
+                        setCancelable(true)
+                        setContentView(R.layout.view_change_name)
+                        tv_cancel_change.setOnClickListener{ dismiss() }
+                        tv_finish.setOnClickListener {
+                            val name = ev_name.text.toString()
+                            defaultSp.edit { putString("userName",name) }
+                            this@MainActivity.tv_nickname.text = name
+                            dismiss()
+                        }
+                        window?.setLayout((screenWidth / 1.5f).toInt(), screenHeight / 4)
+                    }.show()
                 }
             }
         })
         dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         //todo：前往不同的页面
-//      音乐详情
         ibtn_more_main.setOnClickListener {
             startMusicDetailActivity(this@MainActivity)
         }
@@ -214,9 +256,6 @@ class MainActivity : BaseActivity() {
             when (it.title) {
                 resources.getString(R.string.daily_recommend) -> {
                 }
-                resources.getString(R.string.setting) -> {
-                }
-
                 resources.getString(R.string.comments_plaza) -> startActivity(
                     Intent(
                         this@MainActivity,
@@ -233,11 +272,6 @@ class MainActivity : BaseActivity() {
         }
 
 
-    }
-
-    override fun onResume() {
-        smv_main.updateRes()
-        super.onResume()
     }
 
     private fun changeView() {
@@ -269,6 +303,20 @@ class MainActivity : BaseActivity() {
                 }
                 start()
             }
+        }
+    }
+
+    override fun onResume() {
+        smv_main.updateRes()
+        super.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            val url = Matisse.obtainResult(data)
+            Glide.with(this).load(url).into(cim_avatar)
+            defaultSp.edit { putString("userAvatar",url.toString()) }
         }
     }
 

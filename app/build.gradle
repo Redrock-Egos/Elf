@@ -65,6 +65,11 @@ dependencies {
         exclude group: 'com.android.support'
     }
 
+    // 图片选择
+    implementation('com.zhihu.android:matisse:0.4.3') {
+        exclude group: 'com.android.support'
+    }
+
     // 歌词
     implementation 'me.wcy:lrcview:2.0.1'
 

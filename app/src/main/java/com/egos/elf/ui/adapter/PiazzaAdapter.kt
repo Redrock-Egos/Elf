@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.egos.elf.R
-import com.egos.elf.common.bean.TestData
+import com.egos.elf.common.bean.PiazzaData
+import com.egos.elf.common.bean.moe.PlayList
+import com.egos.elf.common.bean.toPlayList
 import kotlinx.android.synthetic.main.item_rv_piazza.view.*
 
 /*
  * Created by Cchanges on 2018/11/27
  */
 class PiazzaAdapter(
-    private var commentList: MutableList<TestData>
+    private var commentList: MutableList<PiazzaData>,
+    private var listener: (list:PlayList) -> Unit
 ) : RecyclerView.Adapter<PiazzaAdapter.PiazzaViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PiazzaViewHolder {
@@ -40,10 +43,15 @@ class PiazzaAdapter(
             tv_singer_piazza.text = currentMusic.artistNameStr
             tv_time_piazza.text = commentList[position].time + "前"
             ibtn_piazza_playing.setOnClickListener {
-//              todo 播放当前歌曲
+                listener(commentList[position].toPlayList())
             }
         }
 
+    }
+
+    fun setData(list: MutableList<PiazzaData>) {
+        commentList = list
+        notifyDataSetChanged()
     }
 
     inner class PiazzaViewHolder(view: View) : RecyclerView.ViewHolder(view)
