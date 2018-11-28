@@ -1,6 +1,7 @@
 package com.egos.elf.ui.activity
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.egos.elf.App
@@ -28,15 +29,25 @@ class ShowStarActivity : BaseNoNeedListenActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        common_toolbar.init("我的收藏")
-
         navigation = NavHostFragment.findNavController(nav_fragment)
-
+        common_toolbar.init("我的收藏")
     }
 
     override fun onActivate() {
         super.onActivate()
         activateListener?.invoke()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_switch, menu)
+        menu?.findItem(R.id.menu_switch)?.setOnMenuItemClickListener {
+            if (navigation.currentDestination?.id == R.id.star_music_item_fragment) {
+                navigation.navigate(R.id.star_playlist_fragment)
+            } else {
+                navigation.popBackStack()
+            }
+            return@setOnMenuItemClickListener true
+        }
+        return super.onCreateOptionsMenu(menu)
     }
 }
