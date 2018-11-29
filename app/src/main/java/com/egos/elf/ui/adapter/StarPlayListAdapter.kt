@@ -1,5 +1,6 @@
 package com.egos.elf.ui.adapter
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,8 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.egos.elf.R
 import com.egos.elf.common.bean.moe.PlayList
+import com.egos.elf.ui.activity.RecActivity
+import com.egos.elf.ui.activity.RecDetailActivity
 import kotlinx.android.synthetic.main.item_rv_star_list.view.*
 import kotlinx.android.synthetic.main.item_star_item_music.view.*
 
@@ -28,10 +31,10 @@ class StarPlayListAdapter(private val list: List<PlayList>) : RecyclerView.Adapt
                 tv_singer_name.text = it.artistNameStr
             }
             btn_play.setOnClickListener {
-                //todo 跳转歌单详情页面查看列表
+                context.startActivity(Intent(context,RecDetailActivity::class.java))
             }
             setOnClickListener {
-                //todo 跳转推荐页面查看歌单详情
+                context.startActivity(Intent(context, RecActivity::class.java))
             }
         }
     }
