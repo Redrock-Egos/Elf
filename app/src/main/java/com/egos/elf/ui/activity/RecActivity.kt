@@ -52,8 +52,8 @@ class RecActivity : BaseNoNeedListenActivity() {
     private fun loadData(data: PlayListWrapper) {
         if (data.code == 200) {
             Log.d("fxy",data.toString())
-            Glide.with(this).load(data.result.coverImgUrl).into(rec_iv_bg)
-            Glide.with(this).load(data.result.tracks[0].album!!.blurPicUrl).into(rec_iv_album_bg)
+            Glide.with(App.context).load(data.result.coverImgUrl).into(rec_iv_bg)
+            Glide.with(App.context).load(data.result.tracks[0].album!!.blurPicUrl).into(rec_iv_album_bg)
             rec_tv_title.text = data.result.name
             rec_tv_content.text = data.result.description
             rec_iv_album_title.text = data.result.tracks[0].name
@@ -102,4 +102,5 @@ class RecActivity : BaseNoNeedListenActivity() {
             startActivity(Intent(this@RecActivity,RecDetailActivity::class.java))
         }
     }
+
 }
