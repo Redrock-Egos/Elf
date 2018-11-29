@@ -88,5 +88,10 @@ class MusicInfoLayout @JvmOverloads constructor(
         totalAnimator.end()
         backgroundAnimator.end()
     }
+
+    fun changeColor(color : String){
+        disk_view.changeColor(color)
+        spread_view.changeColor(color)
+    }
 }
 

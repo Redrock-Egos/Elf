@@ -20,10 +20,11 @@ class DiskView @JvmOverloads constructor(
     context: Context, attr: AttributeSet? = null, defStyleInt: Int = 0
 ) : AppCompatImageView(context, attr, defStyleInt) {
 
+    private var backgroundColor = "#C0D2F0"
     private val diskPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val mBackgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        color = Color.parseColor("#C0D2F0")
+        color = Color.parseColor(backgroundColor)
         strokeWidth = (discSize - picSize) / 4f
     }
     private var disk: Bitmap
@@ -96,5 +97,9 @@ class DiskView @JvmOverloads constructor(
             }
         }
         animator.start()
+    }
+
+    fun changeColor(color : String) {
+        backgroundColor = color
     }
 }

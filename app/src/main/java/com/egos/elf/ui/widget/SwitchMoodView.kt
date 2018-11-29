@@ -1,6 +1,7 @@
 package com.egos.elf.ui.widget
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.support.constraint.ConstraintLayout
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
@@ -10,8 +11,6 @@ import com.egos.elf.R
 import com.egos.elf.common.bean.Mood.*
 import com.egos.elf.common.utils.PlayListManager.Companion.DEFAULT_PLAY_LIST_KEY
 import com.egos.elf.common.utils.invisible
-import com.egos.elf.common.utils.screenHeight
-import com.egos.elf.common.utils.screenWidth
 import com.egos.elf.common.utils.visible
 import kotlinx.android.synthetic.main.include_buttons.view.*
 
@@ -26,6 +25,7 @@ class SwitchMoodView @JvmOverloads constructor(
     private val currentRes = mutableListOf<Int>()
     private var isExpand = false
     private var isDefault = false
+    private val background by lazy { BitmapFactory.decodeResource(resources,R.drawable.bg_frame_short) }
     private var listener: NotifyDataChangedListener? = null
 
     init {
@@ -34,8 +34,8 @@ class SwitchMoodView @JvmOverloads constructor(
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        val width = MeasureSpec.makeMeasureSpec((60 / 375.0 * screenWidth).toInt(), MeasureSpec.EXACTLY)
-        val height = MeasureSpec.makeMeasureSpec((225 / 667.0 * screenHeight).toInt(), MeasureSpec.EXACTLY)
+        val width = MeasureSpec.makeMeasureSpec(background.width, MeasureSpec.EXACTLY)
+        val height = MeasureSpec.makeMeasureSpec(background.height, MeasureSpec.EXACTLY)
         super.onMeasure(width, height)
     }
 

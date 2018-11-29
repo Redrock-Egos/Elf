@@ -31,8 +31,8 @@ class WelcomeActivity : BaseNoNeedListenActivity() {
 
     private fun setBackground() {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.bg_welcome) ?: return
-        val scaledHeight = bitmap.height / (bitmap.width / screenWidth)
-        val newBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, scaledHeight, false)
+        val scaledHeight = bitmap.height * 1f / (bitmap.width * 1f / screenWidth )
+        val newBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, scaledHeight.toInt(), false)
         iv_bg_welcome.viewTreeObserver.addOnGlobalLayoutListener {
             val viewHeight = iv_bg_welcome.measuredHeight
             val offset = (newBitmap.height - viewHeight) / 2

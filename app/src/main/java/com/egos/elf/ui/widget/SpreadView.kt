@@ -19,6 +19,7 @@ class SpreadView : View {
         get() = (230.0 / 375.0 * screenWidth).toFloat()
     private val picSize: Float
         get() = (220.0 / 375.0 * screenWidth).toFloat()
+    private var backgroundColor = "#C0D2F0"
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -35,7 +36,7 @@ class SpreadView : View {
 
     private fun initBackground() {
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.parseColor("#C0D2F0")
+            color = Color.parseColor(backgroundColor)
             style = Paint.Style.STROKE
             strokeWidth = 2f
         }
@@ -47,5 +48,11 @@ class SpreadView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(background, 0f, 0f, null)
+    }
+
+    fun changeColor(color: String) {
+        backgroundColor = color
+        initBackground()
+        postInvalidate()
     }
 }

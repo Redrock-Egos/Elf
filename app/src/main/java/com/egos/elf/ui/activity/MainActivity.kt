@@ -73,16 +73,17 @@ class MainActivity : BaseActivity() {
     override fun onActivate() {
         musicControlBinder?.getCurrentTrack()?.apply {
             discView.initMusicTextData(this)
-            Glide.with(this@MainActivity).load(album?.blurPicUrl).into(object : CustomViewTarget<AppCompatImageView,Drawable>(disk_view) {
-                override fun onResourceCleared(placeholder: Drawable?) = Unit
+            Glide.with(this@MainActivity).load(album?.blurPicUrl)
+                .into(object : CustomViewTarget<AppCompatImageView, Drawable>(disk_view) {
+                    override fun onResourceCleared(placeholder: Drawable?) = Unit
 
-                override fun onLoadFailed(errorDrawable: Drawable?) = Unit
+                    override fun onLoadFailed(errorDrawable: Drawable?) = Unit
 
-                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                    disk_view.upDatePicture(resource)
-                }
+                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
+                        disk_view.upDatePicture(resource)
+                    }
 
-            })
+                })
             ApiGenerator.getMoeApiService()
                 .getLyric(id)
                 .subscribeOn(Schedulers.io())
@@ -117,7 +118,7 @@ class MainActivity : BaseActivity() {
             val view = View.inflate(this, R.layout.include_card, null).apply {
                 tv_card_text.text = "还是很沮丧吗？来点开心的吧！"
                 btn_card_sure.setOnClickListener {
-//                   todo 心情转换成开心的..
+                    //                   todo 心情转换成开心的..
                 }
                 btn_card_cancel.setOnClickListener {
                     dl_main.removeView(this)
@@ -200,16 +201,16 @@ class MainActivity : BaseActivity() {
             if (!dl_main.isDrawerOpen(nv_setting)) {
                 dl_main.openDrawer(nv_setting)
 
-                tv_nickname.text = defaultSp.getString("userName","Self")
-                val uri = defaultSp.getString("userAvatar",null)
-                if (uri == null){
+                tv_nickname.text = defaultSp.getString("userName", "Self")
+                val uri = defaultSp.getString("userAvatar", null)
+                if (uri == null) {
 //              todo 默认头像加载
                 } else {
                     Glide.with(this).load(Uri.parse(uri)).into(cim_avatar)
                 }
 
 
-                cim_avatar.setOnClickListener {_ ->
+                cim_avatar.setOnClickListener { _ ->
                     RxPermissions(this@MainActivity)
                         .request(Manifest.permission.READ_EXTERNAL_STORAGE)
                         .subscribe {
@@ -233,10 +234,10 @@ class MainActivity : BaseActivity() {
                     Dialog(this@MainActivity).apply {
                         setCancelable(true)
                         setContentView(R.layout.view_change_name)
-                        tv_cancel_change.setOnClickListener{ dismiss() }
+                        tv_cancel_change.setOnClickListener { dismiss() }
                         tv_finish.setOnClickListener {
                             val name = ev_name.text.toString()
-                            defaultSp.edit { putString("userName",name) }
+                            defaultSp.edit { putString("userName", name) }
                             this@MainActivity.tv_nickname.text = name
                             dismiss()
                         }
@@ -270,8 +271,6 @@ class MainActivity : BaseActivity() {
             dl_main.closeDrawer(nv_setting)
             true
         }
-
-
     }
 
     private fun changeView() {
@@ -315,8 +314,8 @@ class MainActivity : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 0 && resultCode == RESULT_OK) {
             val url = Matisse.obtainResult(data)
-            Glide.with(this).load(url).into(cim_avatar)
-            defaultSp.edit { putString("userAvatar",url.toString()) }
+            Glide.with(this).load(url[0]).into(cim_avatar)
+            defaultSp.edit { putString("userAvatar", url[0].toString()) }
         }
     }
 

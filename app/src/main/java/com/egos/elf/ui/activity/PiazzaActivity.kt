@@ -13,10 +13,10 @@ import com.egos.elf.ui.adapter.PiazzaAdapter
 import com.egos.elf.ui.widget.SwitchMoodView
 import kotlinx.android.synthetic.main.activity_piazza.*
 
-class PiazzaActivity : BaseNoNeedListenActivity(),SwitchMoodView.NotifyDataChangedListener {
+class PiazzaActivity : BaseNoNeedListenActivity(), SwitchMoodView.NotifyDataChangedListener {
 
     private val piazzaModel by lazy { ViewModelProviders.of(this@PiazzaActivity).get(PiazzaViewModel::class.java) }
-    private lateinit var adapter : PiazzaAdapter
+    private lateinit var adapter: PiazzaAdapter
 
     override val resId: Int
         get() = R.layout.activity_piazza
@@ -24,7 +24,7 @@ class PiazzaActivity : BaseNoNeedListenActivity(),SwitchMoodView.NotifyDataChang
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         common_toolbar.init("一些想说的")
-        adapter = PiazzaAdapter(mutableListOf()){
+        adapter = PiazzaAdapter(mutableListOf()) {
             smv_piazza.setDefaultMood()
             App.playListManager.updatePlayList(PlayListManager.DEFAULT_PLAY_LIST_KEY, it)
         }
@@ -35,7 +35,7 @@ class PiazzaActivity : BaseNoNeedListenActivity(),SwitchMoodView.NotifyDataChang
         }
     }
 
-    private fun initData(){
+    private fun initData() {
         piazzaModel.initData()
         piazzaModel.commentList.observeForever {
             if (it == null)
@@ -49,6 +49,6 @@ class PiazzaActivity : BaseNoNeedListenActivity(),SwitchMoodView.NotifyDataChang
     }
 
     override fun currentState() {
-        piazzaModel.updateData()
+        piazzaModel.initData()
     }
 }
