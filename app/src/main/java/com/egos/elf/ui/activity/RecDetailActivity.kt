@@ -45,7 +45,7 @@ class RecDetailActivity : BaseNoNeedListenActivity() {
             mAdapter.listenr = {position->
                 App.playListManager.apply {
                     updatePlayList(PlayListManager.DEFAULT_PLAY_LIST_KEY,data)
-                    updateKeySequence(PlayListManager.DEFAULT_PLAY_LIST_KEY)
+                    updateKeySequence(PlayListManager.DEFAULT_PLAY_LIST_KEY, false)
                 }
                 musicControlBinder?.setPlayPos(position)
                 startMusicDetailActivity(this@RecDetailActivity)

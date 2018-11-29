@@ -22,7 +22,7 @@ class ShowStarActivity : BaseNoNeedListenActivity() {
 
     fun onMusicSelect(playList: PlayList, pos: Int) {
         App.playListManager.updatePlayList(PlayListManager.DEFAULT_PLAY_LIST_KEY, playList)
-        App.playListManager.updateKeySequence(PlayListManager.DEFAULT_PLAY_LIST_KEY)
+        App.playListManager.updateKeySequence(PlayListManager.DEFAULT_PLAY_LIST_KEY, false)
         musicControlBinder?.setPlayPos(pos)
         startMusicDetailActivity(this)
     }
