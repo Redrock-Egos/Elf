@@ -67,4 +67,5 @@ class PlayListManager {
 
     fun getCurrentPlayList() = playlistMap[keySequence[0]]
 
+    fun getTempPlayList(key:String) = playlistMap[key]
 }

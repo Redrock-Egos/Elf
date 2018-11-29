@@ -6,6 +6,7 @@ import android.arch.persistence.room.Room
 import android.content.Context
 import com.danikula.videocache.HttpProxyCacheServer
 import com.egos.elf.common.room.ElfDatabase
+import com.egos.elf.common.room.RecDatabase
 import com.egos.elf.common.utils.PlayListManager
 
 class App : Application() {
@@ -27,6 +28,9 @@ class App : Application() {
 
         lateinit var elfDatabase: ElfDatabase
             private set
+
+        lateinit var recDatabase: RecDatabase
+            private set
     }
 
     override fun attachBaseContext(base: Context) {
@@ -34,5 +38,6 @@ class App : Application() {
         context = base
         playListManager = PlayListManager()
         elfDatabase = Room.databaseBuilder(base, ElfDatabase::class.java, ElfDatabase.NAME).build()
+        recDatabase = Room.databaseBuilder(base,RecDatabase::class.java,RecDatabase.NAME).build()
     }
 }

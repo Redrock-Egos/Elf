@@ -2,22 +2,23 @@ package com.egos.elf.common.bean.moe
 
 import android.arch.persistence.room.*
 import com.egos.elf.common.bean.Mood
+import com.egos.elf.common.room.RecTypeCOnverterHelper
 import com.egos.elf.common.room.TypeConverterHelper
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class PlayListWrapper(
     @SerializedName("result")
-    val result: PlayList,
+    var result: PlayList,
     @SerializedName("code")
-    val code: Int = 0
+    var code: Int = 0
 )
 
 data class Artist(
     @SerializedName("name")
-    val artistName: String = "",
+    var artistName: String = "",
     @SerializedName("id")
-    val artistId: Long = 0L
+    var artistId: Long = 0L
 )
 
 @Entity(tableName = "music")
@@ -49,7 +50,7 @@ data class Music(
 ) {
     val artistNameStr: String
         get() {
-            val sb = StringBuilder()
+            var sb = StringBuilder()
             artists?.forEach {
                 sb.append(it.artistName).append("/")
             }
@@ -65,42 +66,47 @@ data class Album(
 
 data class Creator(
     @SerializedName("nickname")
-    val nickname: String = "",
+    var nickname: String = "",
+    @ColumnInfo(name = "creator_userId")
     @SerializedName("userId")
-    val userId: Long = 0L,
+    var userId: Long = 0L,
     @SerializedName("gender")
-    val gender: Int = 0,
+    var gender: Int = 0,
     @SerializedName("signature")
-    val signature: String = "",
+    var signature: String = "",
+    @ColumnInfo(name = "creator_description")
     @SerializedName("description")
-    val description: String = "",
+    var description: String = "",
     @SerializedName("detailDescription")
-    val detailDescription: String = "",
+    var detailDescription: String = "",
     @SerializedName("backgroundUrl")
-    val backgroundUrl: String = "",
+    var backgroundUrl: String = "",
     @SerializedName("avatarUrl")
-    val avatarUrl: String = ""
+    var avatarUrl: String = ""
 )
 
+@Entity(tableName = "playlist")
+@TypeConverters(RecTypeCOnverterHelper::class)
 data class PlayList(
     @SerializedName("description")
-    val description: String = "",
+    var description: String = "",
     @SerializedName("id")
-    val id: Long = 0L,
+    @PrimaryKey()
+    var id: Long = 0L,
     @SerializedName("totalDuration")
-    val totalDuration: Int = 0,
+    var totalDuration: Int = 0,
     @SerializedName("creator")
-    val creator: Creator? = null,
+    var creator: Creator? = null,
     @SerializedName("commentThreadId")
-    val commentThreadId: String = "",
+    var commentThreadId: String = "",
     @SerializedName("updateTime")
-    val updateTime: Long = 0,
+    var updateTime: Long = 0,
     @SerializedName("userId")
-    val userId: Int = 0,
+    var userId: Int = 0,
     @SerializedName("tracks")
-    val tracks: MutableList<Music> = mutableListOf(),
+    var tracks: MutableList<Music> = mutableListOf(),
     @SerializedName("coverImgUrl")
-    val coverImgUrl: String = "",
+    var coverImgUrl: String = "",
     @SerializedName("name")
-    val name: String = ""
+    var name: String = ""
 )

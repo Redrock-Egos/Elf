@@ -21,7 +21,7 @@ class WelcomeActivity : BaseNoNeedListenActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setBackground()
+       // setBackground()
         loadMoodPlayList()
         Handler().postDelayed({
             startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))

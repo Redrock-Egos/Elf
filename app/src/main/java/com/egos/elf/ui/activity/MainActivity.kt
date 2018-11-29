@@ -256,6 +256,7 @@ class MainActivity : BaseActivity() {
         nv_setting.setNavigationItemSelectedListener {
             when (it.title) {
                 resources.getString(R.string.daily_recommend) -> {
+                    startActivity(Intent(this@MainActivity,RecActivity::class.java))
                 }
                 resources.getString(R.string.comments_plaza) -> startActivity(
                     Intent(

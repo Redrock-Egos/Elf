@@ -85,7 +85,7 @@
 
                         <ImageView
                             android:id="@+id/rec_iv_album_bg"
-                            android:layout_width="match_parent"
+                            android:layout_width="76dp"
                             android:layout_height="match_parent"
                             android:foreground="#60000000"
                             android:scaleType="centerCrop"
@@ -150,7 +150,7 @@
                 <Button
                     android:id="@+id/rec_btn_star"
                     android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_height="14dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_star_off" />
             </FrameLayout>

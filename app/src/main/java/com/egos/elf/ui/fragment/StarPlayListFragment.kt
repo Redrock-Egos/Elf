@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.egos.elf.R
+import com.egos.elf.common.utils.selectRecList
+import com.egos.elf.common.utils.setSchedulers
 import com.egos.elf.common.utils.startMusicDetailActivity
+import com.egos.elf.ui.adapter.StarPlayListAdapter
 import kotlinx.android.synthetic.main.fragment_star_play_list.view.*
 
 class StarPlayListFragment : Fragment() {
@@ -19,7 +22,13 @@ class StarPlayListFragment : Fragment() {
         val v = inflater.inflate(R.layout.fragment_star_play_list, container, false)
         v.apply {
             rv_star_list.layoutManager = LinearLayoutManager(context)
-//           todo 收藏歌单的List<PlayList> rv_star_list.adapter = StarPlayListAdapter()
+            selectRecList()
+                    .setSchedulers()
+                    .subscribe {
+                        it?.let {
+                            rv_star_list.adapter = StarPlayListAdapter(it)
+                        }
+                    }
             iv_more.setOnClickListener {
                 startMusicDetailActivity(context)
             }
