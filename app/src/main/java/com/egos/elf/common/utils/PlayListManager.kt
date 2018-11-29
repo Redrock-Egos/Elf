@@ -42,7 +42,7 @@ class PlayListManager {
         }
     }
 
-    fun updateKeySequence(select: String) {
+    fun updateKeySequence(select: String, playFromStart: Boolean = true) {
         keySequence.remove(select)
         if (keySequence[0] == DEFAULT_PLAY_LIST_KEY) {
             keySequence[0] = select
@@ -56,7 +56,9 @@ class PlayListManager {
                 }
             }
         }
-        AndroidSchedulers.mainThread().scheduleDirect { changeListener?.invoke() }
+        if (playFromStart) {
+            AndroidSchedulers.mainThread().scheduleDirect { changeListener?.invoke() }
+        }
     }
 
     fun useKeySequence(use: (key: String) -> Unit) {

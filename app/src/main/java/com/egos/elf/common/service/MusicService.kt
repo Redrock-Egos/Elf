@@ -130,7 +130,7 @@ class MusicService : Service(), ElfMusicPlayer.MusicPlayerStatusListener {
                 return
             }
             mMusicIndicator = pos
-            play()
+            playMusic(getCurrentTrack() ?: return)
         }
     }
 

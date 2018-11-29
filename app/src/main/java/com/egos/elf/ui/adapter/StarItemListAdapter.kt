@@ -34,24 +34,24 @@ class StarItemListAdapter(
     }
 
     private var musicList: List<ListData> =
-        playList.tracks?.groupBy { DateFormat.format("yyyy.MM.dd", Date(it.starDate)).toString() }
-            ?.map {
+        playList.tracks.groupBy { DateFormat.format("yyyy.MM.dd", Date(it.starDate)).toString() }
+            .map {
                 ListData(
                     it.key,
                     it.value.groupBy { d -> d.category }
                         .toSortedMap(comparator)
                 )
-            } ?: listOf()
+            }
 
     fun refresh() {
-        musicList = playList.tracks?.groupBy { DateFormat.format("yyyy.MM.dd", Date(it.starDate)).toString() }
-            ?.map {
+        musicList = playList.tracks.groupBy { DateFormat.format("yyyy.MM.dd", Date(it.starDate)).toString() }
+            .map {
                 ListData(
                     it.key,
                     it.value.groupBy { d -> d.category }
                         .toSortedMap(comparator)
                 )
-            } ?: listOf()
+            }
         notifyDataSetChanged()
     }
 
@@ -89,7 +89,7 @@ class StarItemListAdapter(
                     g.load(it.album?.blurPicUrl).into(riv_music_img)
                     tv_music_name.text = it.name
                     tv_singer_name.text = it.artistNameStr
-                    setOnClickListener { _ ->
+                    setOnClickListener {
                         onMusicSelect(list, i)
                     }
                 })
