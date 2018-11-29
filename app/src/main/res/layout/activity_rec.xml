@@ -14,114 +14,118 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <android.support.v7.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="15dp"
-                app:cardCornerRadius="5dp">
-
-                <ImageView
-                    android:id="@+id/rec_iv_bg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    tools:background="@drawable/ic_launcher_background" />
-            </android.support.v7.widget.CardView>
-
-            <TextView
-                android:id="@+id/rec_tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                tools:text="王家卫的映画世界" />
-
-            <TextView
-                android:id="@+id/rec_tv_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:lineSpacingMultiplier="1.3"
-                tools:text="王家卫，出生于上海，5岁时随家移居香港。毕业于香港理工学院美术设计系。1981年考进无线电视台第一期编导培训班。1988年王家卫自编自导第一部电影《旺角卡门》，影片由刘德华、张曼玉、万梓良等主演。这部电影在传统的江湖片中拍出新意，获得成功。让我们随着原声音乐走进他的电影世界。"
-                android:textColor="#989898"
-                android:textSize="15sp" />
-
-
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/rec_cv_shape"
-                android:padding="10dp">
+                android:orientation="vertical">
 
                 <android.support.v7.widget.CardView
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="0dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    app:cardCornerRadius="5dp">
 
-
-                    <FrameLayout
-                        android:id="@+id/rec_btn_play"
+                    <ImageView
+                        android:id="@+id/rec_iv_bg"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:id="@+id/rec_iv_album_bg"
-                            android:layout_width="76dp"
-                            android:layout_height="match_parent"
-                            android:foreground="#60000000"
-                            android:scaleType="centerCrop"
-                            tools:background="@drawable/ic_launcher_background" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_rec_play" />
-                    </FrameLayout>
+                        android:scaleType="centerCrop"
+                        tools:background="@drawable/ic_launcher_background" />
                 </android.support.v7.widget.CardView>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/rec_tv_title"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    tools:text="王家卫的映画世界" />
 
-                    <TextView
-                        android:id="@+id/rec_iv_album_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="王家卫的映画世界"
-                        android:textColor="#000000"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/rec_tv_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:lineSpacingMultiplier="1.3"
+                    tools:text="王家卫，出生于上海，5岁时随家移居香港。毕业于香港理工学院美术设计系。1981年考进无线电视台第一期编导培训班。1988年王家卫自编自导第一部电影《旺角卡门》，影片由刘德华、张曼玉、万梓良等主演。这部电影在传统的江湖片中拍出新意，获得成功。让我们随着原声音乐走进他的电影世界。"
+                    android:textColor="#989898"
+                    android:textSize="15sp" />
 
-                    <TextView
-                        android:id="@+id/rec_iv_album_owner"
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/rec_cv_shape"
+                    android:padding="10dp">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="0dp">
+
+
+                        <FrameLayout
+                            android:id="@+id/rec_btn_play"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:id="@+id/rec_iv_album_bg"
+                                android:layout_width="76dp"
+                                android:layout_height="match_parent"
+                                android:foreground="#60000000"
+                                android:scaleType="centerCrop"
+                                tools:background="@drawable/ic_launcher_background" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_rec_play" />
+                        </FrameLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        tools:text="甘涛vinson"
-                        android:textSize="12sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/rec_iv_album_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="王家卫的映画世界"
+                            android:textColor="#000000"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/rec_iv_album_owner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            tools:text="甘涛vinson"
+                            android:textSize="12sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,7 +154,7 @@
                 <Button
                     android:id="@+id/rec_btn_star"
                     android:layout_width="20dp"
-                    android:layout_height="14dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_star_off" />
             </FrameLayout>
@@ -176,7 +180,7 @@
                 <Button
                     android:id="@+id/rec_btn_commend"
                     android:layout_width="20dp"
-                    android:layout_height="15dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center"
                     android:background="@drawable/ic_comment" />
             </FrameLayout>
