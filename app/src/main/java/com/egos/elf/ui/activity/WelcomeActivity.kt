@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.widget.ImageView
 import com.egos.elf.R
 import com.egos.elf.common.base.BaseNoNeedListenActivity
 import com.egos.elf.common.utils.loadMoodPlayList
@@ -31,13 +32,20 @@ class WelcomeActivity : BaseNoNeedListenActivity() {
 
     private fun setBackground() {
         val bitmap = BitmapFactory.decodeResource(resources, R.drawable.bg_welcome) ?: return
-        val scaledHeight = bitmap.height * 1f / (bitmap.width * 1f / screenWidth )
+        val scaledHeight = (screenWidth * 1f / bitmap.width) * bitmap.height
         val newBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, scaledHeight.toInt(), false)
         iv_bg_welcome.viewTreeObserver.addOnGlobalLayoutListener {
             val viewHeight = iv_bg_welcome.measuredHeight
-            val offset = Math.abs(newBitmap.height - viewHeight)
-            val final = Bitmap.createBitmap(newBitmap, 0, offset, newBitmap.width, newBitmap.height - offset)
-            iv_bg_welcome.setImageDrawable(BitmapDrawable(resources, final))
+            val temp = newBitmap.height - viewHeight
+            if (temp <= 0) {
+                iv_bg_welcome.apply {
+                    setImageDrawable(BitmapDrawable(resources,bitmap))
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                }
+            } else {
+                val final = Bitmap.createBitmap(newBitmap, 0, temp, screenWidth, newBitmap.height - temp)
+                iv_bg_welcome.setImageDrawable(BitmapDrawable(resources, final))
+            }
         }
     }
 }

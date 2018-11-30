@@ -117,10 +117,10 @@ class SwitchMoodView @JvmOverloads constructor(
 
     fun changeStyle(){
         isWhite = if (!isWhite){
-            iv_bg.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.bg_frame_white))
+            iv_bg.setBackgroundResource(R.drawable.bg_frame_white)
             true
         } else {
-            iv_bg.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.bg_frame_short))
+            iv_bg.setBackgroundResource(R.drawable.bg_frame_short)
             false
         }
         updateRes()

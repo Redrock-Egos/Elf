@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import com.bumptech.glide.Glide
 import com.egos.elf.App
 import com.egos.elf.R
@@ -63,10 +62,10 @@ class RecActivity : BaseNoNeedListenActivity() {
 
     private fun initView() {
         if (sp.getBoolean("isRecLike", false)) {
-            rec_btn_like.backgroundResource = R.drawable.ic_like_on
+            rec_btn_like.backgroundResource = R.drawable.ic_like_on_blue
         }
         if (sp.getBoolean("isRecStar", false)) {
-            rec_btn_star.backgroundResource = R.drawable.ic_star_on
+            rec_btn_star.backgroundResource = R.drawable.ic_star_on_blue
         }
 
         rec_btn_like.setOnClickListener {
@@ -74,12 +73,12 @@ class RecActivity : BaseNoNeedListenActivity() {
                 sp.edit {
                     putBoolean("isRecLike", true)
                 }
-                it.backgroundResource = R.drawable.ic_like_on
+                it.backgroundResource = R.drawable.ic_like_on_blue
             } else {
                 sp.edit {
                     putBoolean("isRecLike", false)
                 }
-                it.backgroundResource = R.drawable.ic_like_off
+                it.backgroundResource = R.drawable.ic_like_off_blue
             }
         }
         rec_btn_star.setOnClickListener {
@@ -88,13 +87,13 @@ class RecActivity : BaseNoNeedListenActivity() {
                     putBoolean("isRecStar", true)
                 }
                 insertRecPlaylist(data.result)
-                it.backgroundResource = R.drawable.ic_star_on
+                it.backgroundResource = R.drawable.ic_star_on_blue
             } else {
                 sp.edit {
                     putBoolean("isRecStar", false)
                 }
                 deletePlaylistByid(data.result.id)
-                it.backgroundResource = R.drawable.ic_star_off
+                it.backgroundResource = R.drawable.ic_star_off_blue
             }
         }
         rec_btn_play.setOnClickListener {
