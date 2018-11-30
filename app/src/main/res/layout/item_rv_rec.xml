@@ -13,8 +13,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="8dp"
-        android:text="01"
-        android:textColor="#A7B4CC"
+        tools:text="01"
+        android:textColor="@color/rec_tv_num_grey"
         android:textSize="19sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="0.764"
@@ -53,9 +53,11 @@
             android:id="@+id/rec_detail_tv_hot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/rec_tv_singer_grey"
             android:layout_marginTop="2dp"
-            android:text="436%"
-            android:textSize="10sp" />
+            tools:text="436%"
+            android:textSize="10sp"
+            tools:ignore="SmallSp" />
 
     </LinearLayout>
 
@@ -66,8 +68,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
-        android:textColor="#000000"
+        tools:text="TextView"
+        android:textColor="@color/rec_tv_normal_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -80,8 +82,9 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="TextView"
+        tools:text="TextView"
         android:textSize="13sp"
+        android:textColor="@color/rec_tv_singer_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/rec_detail_tv_name"
         app:layout_constraintHorizontal_bias="0.0"

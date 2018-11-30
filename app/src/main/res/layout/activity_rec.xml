@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
-                    android:textColor="#000000"
+                    android:textColor="@color/rec_tv_normal_black"
                     android:textSize="18sp"
                     tools:text="王家卫的映画世界" />
 
@@ -57,7 +57,7 @@
                     android:layout_marginRight="20dp"
                     android:lineSpacingMultiplier="1.3"
                     tools:text="王家卫，出生于上海，5岁时随家移居香港。毕业于香港理工学院美术设计系。1981年考进无线电视台第一期编导培训班。1988年王家卫自编自导第一部电影《旺角卡门》，影片由刘德华、张曼玉、万梓良等主演。这部电影在传统的江湖片中拍出新意，获得成功。让我们随着原声音乐走进他的电影世界。"
-                    android:textColor="#989898"
+                    android:textColor="@color/rec_tv_singer_grey"
                     android:textSize="15sp" />
 
 
@@ -112,7 +112,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             tools:text="王家卫的映画世界"
-                            android:textColor="#000000"
+                            android:textColor="@color/rec_tv_normal_black"
                             android:textSize="12sp" />
 
                         <TextView
@@ -120,6 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/rec_tv_singer_grey"
                             tools:text="甘涛vinson"
                             android:textSize="12sp" />
                     </LinearLayout>

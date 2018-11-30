@@ -51,7 +51,6 @@ class RecActivity : BaseNoNeedListenActivity() {
     @SuppressLint("CheckResult", "SetTextI18n")
     private fun loadData(data: PlayListWrapper) {
         if (data.code == 200) {
-            Log.d("fxy",data.toString())
             Glide.with(App.context).load(data.result.coverImgUrl).into(rec_iv_bg)
             Glide.with(App.context).load(data.result.tracks[0].album!!.blurPicUrl).into(rec_iv_album_bg)
             rec_tv_title.text = data.result.name

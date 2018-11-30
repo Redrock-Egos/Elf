@@ -2,17 +2,17 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#999999</color>
-    <color name="colorAccent">#597AAF</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <color name="transparent">#00ffffff</color>
 
-    <color name="currentLyricColor">#012E75</color>
-    <color name="normalLyricColor">#5476AC</color>
+    <color name="currentLyricColor">#FDFDFE</color>
+    <color name="normalLyricColor">#D6DAE5</color>
 
-    <color name="toolbarTitleColor">#000000</color>
-    <color name="toolbarSubTitleColor">#99000000</color>
+    <color name="toolbarTitleColor">#FFFFFF</color>
+    <color name="toolbarSubTitleColor">#FFFFFF</color>
 
-    <color name="playTimeTextColor">#7a000000</color>
+    <color name="playTimeTextColor">#A8B5CD</color>
 
     <!--star info dialog-->
     <color name="star_info_bg">#fff</color>
@@ -22,5 +22,9 @@
     <color name="star_info_btn">#5476ac</color>
     <color name="star_item_music_name">#e6000000</color>
     <color name="star_item_music_singer_name">#b3000000</color>
+
+    <color name="rec_tv_normal_black">#000000</color>
+    <color name="rec_tv_num_grey">#A7B4CC</color>
+    <color name="rec_tv_singer_grey">#737373</color>
 
 </resources>

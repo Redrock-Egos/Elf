@@ -59,7 +59,7 @@
             android:background="@color/colorPrimary"
             android:fitsSystemWindows="true"
             app:headerLayout="@layout/header_main"
-            app:itemTextColor="#5C7CB0"
+            app:itemTextColor="#5478AB"
             app:menu="@menu/menu_more">
 
     </android.support.design.widget.NavigationView>

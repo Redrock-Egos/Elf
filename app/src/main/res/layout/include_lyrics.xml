@@ -4,6 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/theme_gradient_bg"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <me.wcy.lrcview.LrcView

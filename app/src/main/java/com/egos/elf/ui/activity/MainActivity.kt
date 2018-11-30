@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
@@ -41,6 +42,8 @@ import kotlinx.android.synthetic.main.include_disk.*
 import kotlinx.android.synthetic.main.include_lyrics.view.*
 import kotlinx.android.synthetic.main.include_toolbar_backable.*
 import kotlinx.android.synthetic.main.view_change_name.*
+import org.jetbrains.anko.backgroundColor
+import org.jetbrains.anko.backgroundDrawable
 
 class MainActivity : BaseActivity() {
 
@@ -285,6 +288,7 @@ class MainActivity : BaseActivity() {
                         isUpdate = true
                         fl_container.removeAllViews()
                         fl_container.addView(discView)
+                        cl_main.backgroundColor = Color.parseColor("#FFFFFF")
                     }
                 }
                 start()
@@ -299,6 +303,7 @@ class MainActivity : BaseActivity() {
                         isUpdate = true
                         fl_container.removeAllViews()
                         fl_container.addView(lyricView)
+                        cl_main.backgroundDrawable = resources.getDrawable(R.drawable.theme_gradient_bg)
                     }
                 }
                 start()

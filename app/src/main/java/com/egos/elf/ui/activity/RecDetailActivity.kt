@@ -49,7 +49,6 @@ class RecDetailActivity : BaseNoNeedListenActivity() {
                 }
                 musicControlBinder?.setPlayPos(position)
                 startMusicDetailActivity(this@RecDetailActivity)
-                ToastUtils.show("position=$position")
             }
         }
     }
