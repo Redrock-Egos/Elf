@@ -10,13 +10,15 @@
     <include layout="@layout/include_toolbar_backable" />
 
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0dp"
+            android:layout_weight="1">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,7 +146,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_like_off" />
+                    android:background="@drawable/ic_like_off_blue" />
             </FrameLayout>
 
             <FrameLayout
@@ -157,7 +159,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:background="@drawable/ic_star_off" />
+                    android:background="@drawable/ic_star_off_blue" />
             </FrameLayout>
 
             <FrameLayout
@@ -186,5 +188,5 @@
                     android:background="@drawable/ic_comment" />
             </FrameLayout>
         </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
 </LinearLayout>

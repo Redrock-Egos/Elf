@@ -11,13 +11,14 @@
             android:id="@+id/lrc_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
             android:layout_marginStart="70dp"
             android:layout_marginEnd="70dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lrcLabel="纯音乐~请好好欣赏"
+            app:lrcLabel="歌词加载中..."
             app:lrcCurrentTextColor="@color/currentLyricColor"
             app:lrcNormalTextColor="@color/normalLyricColor"/>
 

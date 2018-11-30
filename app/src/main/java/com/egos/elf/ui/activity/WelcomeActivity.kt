@@ -21,7 +21,7 @@ class WelcomeActivity : BaseNoNeedListenActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-       // setBackground()
+        setBackground()
         loadMoodPlayList()
         Handler().postDelayed({
             startActivity(Intent(this@WelcomeActivity, MainActivity::class.java))
@@ -35,8 +35,8 @@ class WelcomeActivity : BaseNoNeedListenActivity() {
         val newBitmap = Bitmap.createScaledBitmap(bitmap, screenWidth, scaledHeight.toInt(), false)
         iv_bg_welcome.viewTreeObserver.addOnGlobalLayoutListener {
             val viewHeight = iv_bg_welcome.measuredHeight
-            val offset = (newBitmap.height - viewHeight) / 2
-            val final = Bitmap.createBitmap(newBitmap, 0, offset * 2, newBitmap.width, newBitmap.height - 2 * offset)
+            val offset = Math.abs(newBitmap.height - viewHeight)
+            val final = Bitmap.createBitmap(newBitmap, 0, offset, newBitmap.width, newBitmap.height - offset)
             iv_bg_welcome.setImageDrawable(BitmapDrawable(resources, final))
         }
     }

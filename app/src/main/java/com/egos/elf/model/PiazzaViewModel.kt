@@ -19,7 +19,7 @@ class PiazzaViewModel : ViewModel() {
         if (tempList.isNotEmpty())
             tempList.clear()
         currentMusicList = App.playListManager.getCurrentPlayList()
-        val total = (Math.random() * 10).toInt()
+        val total = (Math.random() * 10 + 1).toInt()
         currentMusicList?.let { list ->
             repeat(total) {
                 val pos = (Math.random() * list.tracks.size).toInt()

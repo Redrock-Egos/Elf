@@ -25,6 +25,7 @@ class SwitchMoodView @JvmOverloads constructor(
     private val currentRes = mutableListOf<Int>()
     private var isExpand = false
     private var isDefault = false
+    private var isWhite = false
     private val background by lazy { BitmapFactory.decodeResource(resources,R.drawable.bg_frame_short) }
     private var listener: NotifyDataChangedListener? = null
 
@@ -74,16 +75,30 @@ class SwitchMoodView @JvmOverloads constructor(
         currentRes.clear()
         App.playListManager.useKeySequence {
             if (it == DEFAULT_PLAY_LIST_KEY) {
-                currentRes.add(R.drawable.ic_mood_default)
+                if (!isWhite){
+                    currentRes.add(R.drawable.ic_mood_default)
+                } else {
+                    currentRes.add(R.drawable.ic_mood_default_white)
+                }
                 return@useKeySequence
             }
             currentRes.add(
-                when (valueOf(it)) {
-                    HAPPY -> R.drawable.ic_mood_happy
-                    CLAM -> R.drawable.ic_mood_clam
-                    UNHAPPY -> R.drawable.ic_mood_unhappy
-                    EXCITING -> R.drawable.ic_mood_exciting
+                if (!isWhite){
+                    when (valueOf(it)) {
+                        HAPPY -> R.drawable.ic_mood_happy
+                        CLAM -> R.drawable.ic_mood_clam
+                        UNHAPPY -> R.drawable.ic_mood_unhappy
+                        EXCITING -> R.drawable.ic_mood_exciting
+                    }
+                } else {
+                    when (valueOf(it)) {
+                        HAPPY -> R.drawable.ic_mood_happy_white
+                        CLAM -> R.drawable.ic_mood_clam_white
+                        UNHAPPY -> R.drawable.ic_mood_unhappy_white
+                        EXCITING -> R.drawable.ic_mood_exciting_white
+                    }
                 }
+
             )
         }
         repeat(views.size) { index ->
@@ -100,8 +115,15 @@ class SwitchMoodView @JvmOverloads constructor(
         this.listener = listener
     }
 
-    fun removeListener() {
-        listener = null
+    fun changeStyle(){
+        isWhite = if (!isWhite){
+            iv_bg.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.bg_frame_white))
+            true
+        } else {
+            iv_bg.setImageDrawable(ContextCompat.getDrawable(context,R.drawable.bg_frame_short))
+            false
+        }
+        updateRes()
     }
 
     fun setDefaultMood() {

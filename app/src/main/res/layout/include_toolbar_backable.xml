@@ -26,6 +26,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/toolbarTitleColor"
+            android:layout_marginEnd="16dp"
             android:textSize="18sp" />
     </android.support.v7.widget.Toolbar>
 

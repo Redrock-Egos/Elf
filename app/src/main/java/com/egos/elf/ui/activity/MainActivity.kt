@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.AppCompatImageView
 import android.view.MotionEvent
@@ -65,8 +66,6 @@ class MainActivity : BaseActivity() {
     private var isCommendShow = false
     private var isDialogShow = false
 
-    private val TAG = "MainActivity"
-
     override val resId: Int
         get() = R.layout.activity_main
 
@@ -121,7 +120,9 @@ class MainActivity : BaseActivity() {
             val view = View.inflate(this, R.layout.include_card, null).apply {
                 tv_card_text.text = "还是很沮丧吗？来点开心的吧！"
                 btn_card_sure.setOnClickListener {
-                    //                   todo 心情转换成开心的..
+                    App.playListManager.updateKeySequence(Mood.HAPPY.name)
+                    smv_main.updateRes()
+                    dl_main.removeView(this)
                 }
                 btn_card_cancel.setOnClickListener {
                     dl_main.removeView(this)
@@ -206,12 +207,9 @@ class MainActivity : BaseActivity() {
 
                 tv_nickname.text = defaultSp.getString("userName", "Self")
                 val uri = defaultSp.getString("userAvatar", null)
-                if (uri == null) {
-//              todo 默认头像加载
-                } else {
+                if (uri != null) {
                     Glide.with(this).load(Uri.parse(uri)).into(cim_avatar)
                 }
-
 
                 cim_avatar.setOnClickListener { _ ->
                     RxPermissions(this@MainActivity)
@@ -251,7 +249,6 @@ class MainActivity : BaseActivity() {
         })
         dl_main.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
-        //todo：前往不同的页面
         ibtn_more_main.setOnClickListener {
             startMusicDetailActivity(this@MainActivity)
         }
@@ -259,15 +256,11 @@ class MainActivity : BaseActivity() {
         nv_setting.setNavigationItemSelectedListener {
             when (it.title) {
                 resources.getString(R.string.daily_recommend) -> {
-                    startActivity(Intent(this@MainActivity,RecActivity::class.java))
+                    startActivity(Intent(this@MainActivity, RecActivity::class.java))
                 }
-                resources.getString(R.string.comments_plaza) -> startActivity(
-                    Intent(
-                        this@MainActivity,
-                        PiazzaActivity::class.java
-                    )
-                )
-
+                resources.getString(R.string.comments_plaza) -> {
+                    startActivity(Intent(this@MainActivity, PiazzaActivity::class.java))
+                }
                 resources.getString(R.string.my_collection) -> {
                     startShowStarActivity(this@MainActivity)
                 }
@@ -289,6 +282,13 @@ class MainActivity : BaseActivity() {
                         fl_container.removeAllViews()
                         fl_container.addView(discView)
                         cl_main.backgroundColor = Color.parseColor("#FFFFFF")
+                        smv_main.changeStyle()
+                        ibtn_more_main.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                this@MainActivity,
+                                R.drawable.ic_music_detail
+                            )
+                        )
                     }
                 }
                 start()
@@ -303,7 +303,15 @@ class MainActivity : BaseActivity() {
                         isUpdate = true
                         fl_container.removeAllViews()
                         fl_container.addView(lyricView)
-                        cl_main.backgroundDrawable = resources.getDrawable(R.drawable.theme_gradient_bg)
+                        cl_main.backgroundDrawable =
+                                ContextCompat.getDrawable(this@MainActivity, R.drawable.theme_gradient_bg)
+                        smv_main.changeStyle()
+                        ibtn_more_main.setImageDrawable(
+                            ContextCompat.getDrawable(
+                                this@MainActivity,
+                                R.drawable.ic_music_detail_white
+                            )
+                        )
                     }
                 }
                 start()
